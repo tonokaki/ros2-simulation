@@ -1,0 +1,39 @@
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Go
+backend/robotasker-api
+
+# Node.js
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+
+# ROS2 ビルド成果物
+ros2_ws/build/
+ros2_ws/install/
+ros2_ws/log/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Docker volumes
+pgdata/
+
+# 環境変数
+.env
+.env.local
+.env.production
+
+# ログ
+*.log

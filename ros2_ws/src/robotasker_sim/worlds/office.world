@@ -1,0 +1,205 @@
+<?xml version="1.0" ?>
+<!--
+  RoboTasker オフィスフロアマップ
+  座標系: seed.sql / locations.yaml と一致
+
+  地点配置:
+    充電ステーション (0, 0)
+    受付           (5, 0)
+    会議室A        (3, 4)
+    会議室B        (7, 4)
+    休憩室         (5, 8)
+    倉庫           (0, 8)
+    エントランス    (10, 0)
+-->
+<sdf version="1.6">
+  <world name="office">
+
+    <!-- 物理エンジン -->
+    <physics type="ode">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+
+    <!-- 照明 -->
+    <light name="sun" type="directional">
+      <cast_shadows>true</cast_shadows>
+      <pose>5 4 10 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <light name="ceiling_1" type="point">
+      <pose>5 4 3 0 0 0</pose>
+      <diffuse>0.4 0.4 0.4 1</diffuse>
+      <range>20</range>
+    </light>
+
+    <!-- 地面 -->
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane><normal>0 0 1</normal><size>20 16</size></plane>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <plane><normal>0 0 1</normal><size>20 16</size></plane>
+          </geometry>
+          <material>
+            <ambient>0.9 0.9 0.9 1</ambient>
+            <diffuse>0.9 0.9 0.9 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- === 外壁 === -->
+    <!-- 南壁 (y=-1) -->
+    <model name="wall_south">
+      <static>true</static>
+      <pose>5 -1 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>12 0.15 1.0</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>12 0.15 1.0</size></box></geometry>
+          <material><ambient>0.7 0.7 0.7 1</ambient></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- 北壁 (y=9) -->
+    <model name="wall_north">
+      <static>true</static>
+      <pose>5 9 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>12 0.15 1.0</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>12 0.15 1.0</size></box></geometry>
+          <material><ambient>0.7 0.7 0.7 1</ambient></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- 西壁 (x=-1) -->
+    <model name="wall_west">
+      <static>true</static>
+      <pose>-1 4 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.15 10.3 1.0</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.15 10.3 1.0</size></box></geometry>
+          <material><ambient>0.7 0.7 0.7 1</ambient></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- 東壁 (x=11) -->
+    <model name="wall_east">
+      <static>true</static>
+      <pose>11 4 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.15 10.3 1.0</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.15 10.3 1.0</size></box></geometry>
+          <material><ambient>0.7 0.7 0.7 1</ambient></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- === 内壁（部屋仕切り） === -->
+    <!-- 会議室A 南壁 (y=3) -->
+    <model name="wall_room_a_south">
+      <static>true</static>
+      <pose>2 3 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>4 0.1 1.0</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>4 0.1 1.0</size></box></geometry>
+          <material><ambient>0.8 0.8 0.85 1</ambient></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- 会議室A 東壁 (x=4.5) 開口あり -->
+    <model name="wall_room_a_east">
+      <static>true</static>
+      <pose>4.5 4.25 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.1 1.5 1.0</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.1 1.5 1.0</size></box></geometry>
+          <material><ambient>0.8 0.8 0.85 1</ambient></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- 会議室B 南壁 (y=3) -->
+    <model name="wall_room_b_south">
+      <static>true</static>
+      <pose>8 3 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>4 0.1 1.0</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>4 0.1 1.0</size></box></geometry>
+          <material><ambient>0.8 0.8 0.85 1</ambient></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- 会議室B 西壁 (x=5.5) 開口あり -->
+    <model name="wall_room_b_west">
+      <static>true</static>
+      <pose>5.5 4.25 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.1 1.5 1.0</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.1 1.5 1.0</size></box></geometry>
+          <material><ambient>0.8 0.8 0.85 1</ambient></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- 休憩室仕切り (y=7) -->
+    <model name="wall_breakroom">
+      <static>true</static>
+      <pose>5 7 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>3 0.1 1.0</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>3 0.1 1.0</size></box></geometry>
+          <material><ambient>0.8 0.8 0.85 1</ambient></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- === 地点マーカー（視覚的な目印） === -->
+    <!-- 充電ステーション (0, 0) -->
+    <model name="marker_charging">
+      <static>true</static>
+      <pose>0 0 0.01 0 0 0</pose>
+      <link name="link">
+        <visual name="visual"><geometry><cylinder><radius>0.3</radius><length>0.02</length></cylinder></geometry>
+          <material><ambient>0.2 0.6 1.0 1</ambient><diffuse>0.2 0.6 1.0 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- 受付 (5, 0) -->
+    <model name="marker_reception">
+      <static>true</static>
+      <pose>5 0 0.01 0 0 0</pose>
+      <link name="link">
+        <visual name="visual"><geometry><cylinder><radius>0.3</radius><length>0.02</length></cylinder></geometry>
+          <material><ambient>0.2 0.8 0.2 1</ambient><diffuse>0.2 0.8 0.2 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- エントランス (10, 0) -->
+    <model name="marker_entrance">
+      <static>true</static>
+      <pose>10 0 0.01 0 0 0</pose>
+      <link name="link">
+        <visual name="visual"><geometry><cylinder><radius>0.3</radius><length>0.02</length></cylinder></geometry>
+          <material><ambient>0.8 0.8 0.2 1</ambient><diffuse>0.8 0.8 0.2 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+  </world>
+</sdf>

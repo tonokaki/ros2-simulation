@@ -19,7 +19,8 @@
       "Bash(npx create-next-app@latest:*)",
       "Bash(npx next:*)",
       "Bash(npm run:*)",
-      "Bash(curl -s http://localhost:3000)"
+      "Bash(curl -s http://localhost:3000)",
+      "Bash(chmod +x:*)"
     ]
   }
 }
