@@ -1,0 +1,49 @@
+services:
+  # PostgreSQL データベース
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: robotasker
+      POSTGRES_PASSWORD: robotasker
+      POSTGRES_DB: robotasker
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U robotasker"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Go バックエンドAPI
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: "8080"
+      DATABASE_URL: "postgres://robotasker:robotasker@db:5432/robotasker?sslmode=disable"
+      USE_MOCK_LLM: "true"
+      USE_MOCK_ROS: "false"      # "true" に戻すとモックに切替
+      ROSBRIDGE_URL: "ws://ros2:9090"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # ROS2 ノード群
+  ros2:
+    build:
+      context: .
+      dockerfile: infra/docker/ros2.Dockerfile
+    ports:
+      - "9090:9090"
+    environment:
+      ROS_DOMAIN_ID: "0"
+    profiles:
+      - ros2   # docker compose --profile ros2 up で起動
+
+volumes:
+  pgdata:

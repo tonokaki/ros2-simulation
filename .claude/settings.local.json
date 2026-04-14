@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(go get:*)",
+      "Bash(go mod:*)",
+      "Bash(go build:*)",
+      "Bash(docker compose:*)",
+      "Bash(curl -s http://localhost:8080/health)",
+      "Bash(curl -s http://localhost:8080/api/v1/locations)",
+      "Bash(python3 -m json.tool)",
+      "Bash(curl -s http://localhost:8080/api/v1/robots)",
+      "Bash(curl -s -X POST http://localhost:8080/api/v1/chat -H 'Content-Type: application/json' -d '{\"message\":\"会議室Bに資料を届けて\"}'2)",
+      "Bash(curl -s http://localhost:8080/api/v1/tasks)",
+      "Bash(curl -s http://localhost:8080/api/v1/dashboard/stats)",
+      "Bash(curl -s -X POST http://localhost:8080/api/v1/chat -H 'Content-Type: application/json' -d '{\"message\":\"会議室Bに資料を届けて\"}')",
+      "Bash(curl -s -X POST http://localhost:8080/api/v1/chat -H 'Content-Type: application/json' -d '{\"message\":\"充電ステーションに戻って\"}')",
+      "Bash(curl -s -X POST http://localhost:8080/api/v1/chat -H 'Content-Type: application/json' -d '{\"message\":\"急ぎで倉庫に荷物を運んで\"}')",
+      "Bash(curl -s -X POST http://localhost:8080/api/v1/chat -H 'Content-Type: application/json' -d '{\"message\":\"会議室Aに資料を届けて\"}')"
+    ]
+  }
+}

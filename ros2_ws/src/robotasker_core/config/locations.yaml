@@ -1,0 +1,30 @@
+# 移動可能地点の座標定義（seed.sqlと一致させる）
+locations:
+  充電ステーション:
+    x: 0.0
+    y: 0.0
+    type: station
+  受付:
+    x: 5.0
+    y: 0.0
+    type: room
+  会議室A:
+    x: 3.0
+    y: 4.0
+    type: room
+  会議室B:
+    x: 7.0
+    y: 4.0
+    type: room
+  休憩室:
+    x: 5.0
+    y: 8.0
+    type: room
+  倉庫:
+    x: 0.0
+    y: 8.0
+    type: room
+  エントランス:
+    x: 10.0
+    y: 0.0
+    type: corridor
