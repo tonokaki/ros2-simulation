@@ -15,7 +15,11 @@
       "Bash(curl -s -X POST http://localhost:8080/api/v1/chat -H 'Content-Type: application/json' -d '{\"message\":\"会議室Bに資料を届けて\"}')",
       "Bash(curl -s -X POST http://localhost:8080/api/v1/chat -H 'Content-Type: application/json' -d '{\"message\":\"充電ステーションに戻って\"}')",
       "Bash(curl -s -X POST http://localhost:8080/api/v1/chat -H 'Content-Type: application/json' -d '{\"message\":\"急ぎで倉庫に荷物を運んで\"}')",
-      "Bash(curl -s -X POST http://localhost:8080/api/v1/chat -H 'Content-Type: application/json' -d '{\"message\":\"会議室Aに資料を届けて\"}')"
+      "Bash(curl -s -X POST http://localhost:8080/api/v1/chat -H 'Content-Type: application/json' -d '{\"message\":\"会議室Aに資料を届けて\"}')",
+      "Bash(npx create-next-app@latest:*)",
+      "Bash(npx next:*)",
+      "Bash(npm run:*)",
+      "Bash(curl -s http://localhost:3000)"
     ]
   }
 }

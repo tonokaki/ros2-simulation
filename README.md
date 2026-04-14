@@ -37,18 +37,33 @@
 ### 必要なもの
 
 - Docker & Docker Compose
+- Node.js 20+ (フロントエンドのローカル開発時)
 
 ### 起動
 
 ```bash
-# 全体起動（Go API + PostgreSQL）
+# バックエンド + DB + フロントエンド起動
 make up
 
 # 初期データ投入
 make seed
 
-# 動作確認
-make api-test
+# ブラウザで開く
+open http://localhost:3000
+```
+
+### ローカル開発 (HMR有効)
+
+```bash
+# バックエンド + DB のみ起動
+docker compose up -d backend db
+
+# 初期データ投入
+make seed
+
+# フロントエンド開発サーバー起動
+make dev
+# → http://localhost:3000
 ```
 
 ### API テスト例
@@ -134,7 +149,7 @@ ros2-simulation/
 
 - [x] **Phase 1**: バックエンドAPI + モックROS2/LLM
 - [x] **Phase 2**: ROS2ノード + 簡易シミュレーション
-- [ ] **Phase 3**: フロントエンド + WebSocket + デモ品質
+- [x] **Phase 3**: フロントエンド + WebSocket + デモ品質
 - [ ] **Phase 4**: Gazebo + ドキュメント + ポートフォリオ仕上げ
 
 ## 設計判断

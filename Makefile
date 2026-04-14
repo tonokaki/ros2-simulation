@@ -1,10 +1,14 @@
-.PHONY: up down build seed logs backend-logs ros2-logs db-shell api-test up-ros2 ros2-topics
+.PHONY: up down build seed logs backend-logs ros2-logs db-shell api-test up-ros2 ros2-topics dev
 
 # === 基本操作 ===
 
-# バックエンド + DB 起動（モックROS2モード）
+# バックエンド + DB + フロントエンド 起動
 up:
 	docker compose up -d --build
+
+# フロントエンドをローカルdev起動（HMR有効）
+dev:
+	cd frontend && npm run dev
 
 # ROS2含む全体起動（実ROS2接続モード）
 up-ros2:

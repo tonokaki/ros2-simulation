@@ -83,12 +83,23 @@ func main() {
 	taskService := service.NewTaskService(taskRepo, robotRepo, llmService, rosClient)
 	robotService := service.NewRobotService(robotRepo)
 
-	// ROS2コールバック登録（タスク完了時にDB更新）
+	// WebSocketハブ（フロントエンドへのリアルタイム配信）
+	wsHub := handler.NewWSHub()
+
+	// ROS2コールバック登録（タスク完了時にDB更新 + フロントエンド通知）
 	rosClient.SetOnTaskComplete(func(taskID string, success bool, message string) {
 		ctx := context.Background()
 		if err := taskService.CompleteTask(ctx, taskID, success, message); err != nil {
 			log.Printf("タスク完了処理エラー: %v", err)
 		}
+		// フロントエンドに通知
+		status := "completed"
+		if !success {
+			status = "failed"
+		}
+		wsHub.Broadcast("task_status", map[string]string{
+			"task_id": taskID, "status": status, "message": message,
+		})
 	})
 	rosClient.SetOnRobotState(func(robotID string, x, y float64, location string) {
 		// UUID形式でない場合はマッピング未完了なのでスキップ
@@ -99,6 +110,10 @@ func main() {
 		if err := robotService.UpdatePosition(ctx, robotID, x, y, location); err != nil {
 			log.Printf("ロボット位置更新エラー: %v", err)
 		}
+		// フロントエンドに通知
+		wsHub.Broadcast("robot_state", map[string]any{
+			"robot_id": robotID, "position_x": x, "position_y": y, "current_location": location,
+		})
 	})
 
 	// ハンドラ
@@ -130,6 +145,9 @@ func main() {
 	mux.HandleFunc("/api/v1/robots/", robotHandler.HandleGet)
 	mux.HandleFunc("/api/v1/locations", robotHandler.HandleLocations)
 	mux.HandleFunc("/api/v1/dashboard/stats", taskHandler.HandleStats)
+
+	// WebSocket（フロントエンド向けリアルタイム配信）
+	mux.HandleFunc("/ws", wsHub.HandleWS)
 
 	// サーバー起動
 	server := &http.Server{
